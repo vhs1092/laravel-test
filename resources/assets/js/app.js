@@ -8,6 +8,43 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+import VueRouter from 'vue-router';
+window.Vue.use(VueRouter);
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+import locale from 'element-ui/lib/locale/lang/en'
+Vue.use(ElementUI, { locale })
+
+import ProductsIndex from './components/products/index.vue';
+import ProductsCreate from './components/products/form.vue';
+import ProductsEdit from './components/products/form.vue';
+import money from 'v-money'
+window.Vue.use(money, { precision: 2 })
+import App from './views/App';
+
+const router = new VueRouter({
+    routes: [
+      {
+          path: '/',
+          name: 'products',
+          component: ProductsIndex
+      },
+       {
+            path: '/products/create',
+            name: 'products-create',
+           component: ProductsCreate
+       }, 
+        {
+            path: '/products/edit/:id',
+            name: 'products-edit',
+            component: ProductsEdit
+        }, 
+
+    ]
+
+
+});
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -15,8 +52,9 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    components: { App },
+    router
 });
